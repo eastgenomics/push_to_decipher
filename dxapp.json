@@ -1,0 +1,98 @@
+{
+    "name": "eggd_pandora",
+    "title": "eggd_pandora",
+    "summary": "Takes patient and variant information and pushes into DECIPHER",
+    "dxapi": "1.0.0",
+    "version": "1.0.0",
+    "properties": {
+      "githubRelease": "v1.0.0"
+    },
+    "inputSpec": [
+        {
+        "name": "api_keys",
+        "label": "DECIPHER API keys",
+        "help": "Link to file containing client and user keys",
+        "class": "file",
+        "default": {"$dnanexus_link": "file-GFk6F78462ZvQ46K8xKX5z61"},
+        "patterns": ["*.json"],
+        "optional": false
+        },
+        {
+        "name": "opencga_config",
+        "label": "OpenCGA configuration",
+        "help": "Link to file containing use identification",
+        "class": "file",
+        "default": {"$dnanexus_link": "file-GKQgxp0462ZvY6zx2QY76jbg"},
+        "patterns": ["*.json"],
+        "optional": false
+        },
+        {
+        "name": "opencga_case_id",
+        "label": "OpenCGA case ID",
+        "help": "OpenCGA case ID",
+        "class": "string",
+        "default": "SAP-43472-1",
+        "optional": false
+        },
+        {
+        "name": "opencga_study_name",
+        "label": "OpenCGA study where the case is located",
+        "help": "The OpenCGA study name in the format[[user@]project:] study where study and project can be either the ID or UUID",
+        "class": "string",
+        "default": "emee-glh@decipher_project:rare_disease_38",
+        "optional": false
+        },
+        {
+        "name": "decipher_submitter_id",
+        "label": "DECIPHER ID of submitter",
+        "help": "The account_id of the DECIPHER user who is the responsible for the patient record. Default is 4812, for Katherine Winfield",
+        "class": "int",
+        "default": 4812,
+        "optional": false
+        }
+    ],
+    "outputSpec": [
+      {
+        "name": "output",
+        "label": "Output",
+        "class": "file",
+        "optional": true,
+        "patterns": [
+          "*"
+        ],
+        "help": ""
+      }
+    ],
+    "runSpec": {
+      "distribution": "Ubuntu",
+      "release": "20.04",
+      "version": "0",
+      "interpreter": "bash",
+      "file": "src/push_to_decipher.sh",
+      "timeoutPolicy": {
+        "*": {
+          "hours": 1
+        }
+      }
+    },
+    "developers":[
+      "org-emee_1"
+    ],
+    "authorizedUsers": [
+      "org-emee_1"
+    ],
+    "access": {
+      "project": "CONTRIBUTE",
+      "network": ["*"],
+      "allProjects": "VIEW"
+    },
+    "regionalOptions": {
+      "aws:eu-central-1": {
+        "systemRequirements": {
+          "*": {
+            "instanceType": "mem1_ssd1_v2_x4"
+          }
+        }
+      }
+    }
+  }
